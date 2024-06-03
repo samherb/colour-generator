@@ -7,6 +7,8 @@ npm run generate
 
 cd dist
 
+touch .nojekyll
+
 git init
 git add -A
 git commit -m 'deploy'
