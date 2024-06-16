@@ -11,11 +11,15 @@
       />
       <div class="flex items-center space-x-2">
         <label class="flex items-center">
-          <input type="checkbox" v-model="isPastel" @change="handleCheckboxChange('pastel')" class="mr-2" />
+          <input type="radio" v-model="colourType" value="default" class="mr-2" />
+          Default
+        </label>
+        <label class="flex items-center">
+          <input type="radio" v-model="colourType" value="pastel" class="mr-2" />
           Pastel
         </label>
         <label class="flex items-center">
-          <input type="checkbox" v-model="isMuted" @change="handleCheckboxChange('muted')" class="mr-2" />
+          <input type="radio" v-model="colourType" value="muted" class="mr-2" />
           Muted
         </label>
       </div>
@@ -42,30 +46,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const numColours = ref(0);
 const colours = ref([]);
 const tooltipVisible = ref(false);
 const tooltipText = ref('');
-const isPastel = ref(false);
-const isMuted = ref(false);
-
-const handleCheckboxChange = (type) => {
-  if (type === 'pastel' && isPastel.value) {
-    isMuted.value = false;
-  } else if (type === 'muted' && isMuted.value) {
-    isPastel.value = false;
-  }
-};
+const colourType = ref('default');
 
 const generateColours = () => {
   colours.value = [];
   for (let i = 0; i < numColours.value; i++) {
     const hue = i / numColours.value;
-    if (isPastel.value) {
+    if (colourType.value === 'pastel') {
       colours.value.push(hslToHex(hue, 0.5, 0.8));
-    } else if (isMuted.value) {
+    } else if (colourType.value === 'muted') {
       colours.value.push(hslToHex(hue, 0.4, 0.6));
     } else {
       colours.value.push(hslToHex(hue, 1, 0.5));
